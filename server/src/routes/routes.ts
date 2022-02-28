@@ -1,5 +1,6 @@
 import { Router } from "express";
-import Test from "../controllers/test";
+import { body } from "express-validator";
+import Auth from "../controllers/auth";
 
 const router = Router();
 
@@ -10,8 +11,13 @@ router.get("/", (req, res) => {
   });
 });
 
-router.get("/users/all", Test.getAllUsers);
+router.post("/signup", 
+  body("email").isEmail(),
+  body("password").isLength({min: 4, max: 20}),
+  Auth.signUp);
 
-router.post("/users/new", Test.createNewUser);
+router.post("/login", Auth.logIn);
+
+router.post("/logout", Auth.logOut);
 
 export default router;
