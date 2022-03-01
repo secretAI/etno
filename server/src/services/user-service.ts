@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import bcrypt from "bcrypt";
 // import {v4 as uuidv4} from "uuid";
 // import { getEnv } from "../tools/getEnv";
@@ -21,11 +22,11 @@ class UserService {
   async signUp(email: string, password: string) {
     try {
       const result = await User.findOne({where: {email: email}});
-      if(result) throw ApiError.requestError(`Ошибка. Email ${email} занят`);
+      if(result) throw ApiError.requestError(`* Email ${email} is already in use *`);
       const _password: string = await bcrypt.hashSync(password, 7);
       const user: any = await User.create({email: email, password: _password});
       
-      return this.bindTokens(user, "SignUp - Success");
+      return this.bindTokens(user, "* SignUp - Success *");
     }
     catch(err) {
       console.log(err);
@@ -35,11 +36,11 @@ class UserService {
   async logIn(email: string, password: string) {
     try {
       const user: any = await User.findOne({where: {email}});
-      if(!user) throw ApiError.requestError(`Пользователь ${email} не найден`);
+      if(!user) throw ApiError.requestError(`* User ${email} not found *`);
       const arePassesEqual = await bcrypt.compare(password, user.password);
-      if(!arePassesEqual) throw ApiError.requestError("Неверный пароль");
+      if(!arePassesEqual) throw ApiError.requestError("* Wrong password *");
       
-      return this.bindTokens(user, "Login - Success");
+      return this.bindTokens(user, "* Login - Success *");
     }
     catch(err) {
       console.log(err);
@@ -47,9 +48,14 @@ class UserService {
   }
 
   async logOut(reToken: string) {
-    const token = await TokenService.removeToken(reToken);
+    try {
+      const token = await TokenService.removeToken(reToken);
     
-    return token;
+      return token;
+    }
+    catch(err) {
+      console.log(err);
+    } 
   }
 }
 

@@ -44,9 +44,25 @@ class TokenService {
   }
 
   async removeToken(reToken: string) {
-    const result = await Token.destroy({where: {reToken: reToken}});
+    try {
+      await Token.destroy({where: {reToken: reToken}});
 
-    return `* Token has been removed: ${reToken} *`;
+      return `* Token has been removed: ${reToken} *`;
+    }
+    catch(err) {
+      console.log(err);
+    }
+  }
+
+  validateToken(token: string, envSecret: string) {
+    try {
+      const result = jwt.verify(token, getEnv(envSecret));
+      return result;
+    }
+    catch(err) {
+      console.log(err);
+      return null;
+    }
   }
 }
 

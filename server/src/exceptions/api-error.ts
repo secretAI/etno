@@ -8,7 +8,7 @@ export class ApiError extends Error {
   }
 
   static authError() {
-    return new ApiError("Авторизируйтесь что бы продолжить", 401);
+    return new ApiError("* Auth to continue *", 401);
   }
 
   static requestError(msg: string) {

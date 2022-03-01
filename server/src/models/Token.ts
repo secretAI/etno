@@ -1,5 +1,6 @@
 import Sequelize from "sequelize";
 import { database } from "../database/main";
+import User from "./User";
 
 const Token = database.define("token", {
   reToken: {
@@ -8,8 +9,15 @@ const Token = database.define("token", {
   },
   userid: {
     type: Sequelize.STRING,
-    unique: true
+    references: {
+      model: User,
+      key: "id"
+    }
   }
+});
+
+Token.addHook("beforeUpdate", (record: any, reToken) => {
+  record.reToken = reToken;
 });
 
 export default Token;

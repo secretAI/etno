@@ -4,7 +4,7 @@ require("dotenv").config();
 export function getEnv(key: string): string {
   const value = process.env[key];
   if(value) return value;
-  console.log(`${key} не найден в .env`);
+  console.log(`* ${key} was not found in .env *`);
 
   process.exit(1);
 }

@@ -10,7 +10,7 @@ export async function startApp(target: IExpressApp) {
     await connectToDB();
     target.listen(port, () => {
       console.log(`* App has started... *
-      ${host}:${port}`);
+      ${host}:${port}/api`);
     });
   }
   catch(err) {

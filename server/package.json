@@ -6,6 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ts-node ./app.ts",
     "serve": "nodemon -x ts-node ./app.ts",
     "db:create": "npx sequelize-cli db:create"
   },

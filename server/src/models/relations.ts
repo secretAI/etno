@@ -1,5 +1,6 @@
 import User from "./User";
 import Token from "./Token";
+import Post from "./Post";
 
 User.hasOne(Token);
-Token.belongsTo(User);
+User.hasMany(Post);
