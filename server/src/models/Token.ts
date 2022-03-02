@@ -3,16 +3,21 @@ import { database } from "../database/main";
 import User from "./User";
 
 const Token = database.define("token", {
+  id: {
+    type: Sequelize.STRING,
+    defaultValue: Sequelize.UUIDV4,
+    primaryKey: true
+  },
   reToken: {
     type: Sequelize.TEXT,
-    primaryKey: true,
   },
   userid: {
     type: Sequelize.STRING,
     references: {
       model: User,
       key: "id"
-    }
+    },
+    unique: true
   }
 });
 

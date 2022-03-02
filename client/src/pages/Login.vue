@@ -2,19 +2,22 @@
 div(class="wrapper")
   form(class="container" @submit.prevent="sendData")
     h1(class="title") Вход
-    glo-input(placeholder="Email" v-model="email")
-    glo-input(placeholder="Пароль" type="password" v-model="password")
+    glo-input(placeholder="Email" v-bind:value="email" @input="email = $event.target.value")
+    glo-input(placeholder="Пароль" type="password" v-bind:value="password" @input="password = $event.target.value")
     log-btn
-    router-link(to="/signup" class="link") Я новый пользователь 
+    router-link(to="/signup" class="link") Создать аккаунт 
+    p(id="msg" v-bind:msg="msg") [ {{msg}} ]
 </template>
 
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      msg: ""
     }
   },
   methods: {
@@ -22,13 +25,16 @@ export default {
       const response = await axios.post("http://127.0.0.1:3030/api/login", {
         email: this.email,
         password: this.password
-      });
+      }).catch(err => this.msg = err);
+      console.log(response.data);
+      if(response.data.access) localStorage.setItem("token", JSON.stringify(response.data));
+      if(response.status === 200) this.$router.push({path: "/dashboard"});
     }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @mixin centerify {
     position: absolute;
     top: 0;
@@ -36,8 +42,6 @@ export default {
     left: 0;
     right: 0;
   }
-  
-  $gray: rgb(224, 224, 224);
   $blue: rgb(0, 83, 160);
 
   .wrapper {
@@ -48,7 +52,6 @@ export default {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-color: $gray;
     .container {
       width: 440px;
       height: 380px;
@@ -57,8 +60,8 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background-color: $gray;
       font-family: 'Roboto Slab', serif;
+      position: relative;
       * {
         margin: 8px;
         font-weight: 600;
@@ -69,11 +72,17 @@ export default {
         color: rgb(32, 32, 32);
       }
       .link {
-        font-size: 20px;
+        margin-top: -5px;
+        font-size: 16px;
         color: black;
-        transition-duration: 120ms;
+        text-decoration: none;
+        text-transform: capitalize;
+        transition-duration: 200ms;
         &:visited {
           color: black;
+        }
+        &:hover {
+          color: rgb(73, 73, 73);
         }
       }
     }

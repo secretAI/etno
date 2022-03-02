@@ -5,11 +5,13 @@ import bcrypt from "bcrypt";
 import User from "../models/User";
 import { ApiError } from "../exceptions/api-error";
 import TokenService from "./token-service";
+import Token from "../models/Token";
 
 class UserService {
   async bindTokens(user: any, msg: string) {
     const tokens = TokenService.generateTokens({...user});
-    await TokenService.saveToken(user.id, tokens.refreshToken);
+    const userData = await TokenService.saveToken(user.id, tokens.refreshToken);
+    if(!userData) throw ApiError.requestError("* User data gathering error *");
 
     return {
       refresh: tokens.refreshToken,
@@ -56,6 +58,18 @@ class UserService {
     catch(err) {
       console.log(err);
     } 
+  }
+
+  async validate(id: string) {
+    try {
+      const validation = Token.findOne({where: {userid: id}});
+      if(!validation) throw ApiError.authError();
+
+      return validation;
+    }
+    catch(err) {
+      console.log(err);
+    }
   }
 }
 

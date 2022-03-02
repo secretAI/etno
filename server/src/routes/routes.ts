@@ -19,23 +19,25 @@ router.get("/", (req, res) => {
   });
 });
 
-router.get("/test", authMiddleware, () => {
-  console.log("* Hi, auth'ed one! *");
-});
-
 router.post("/signup", 
   body("email").isEmail(),
   body("password").isLength({min: 4, max: 20}),
   Auth.signUp);
 
-router.post("/login", Auth.logIn);
+router.post("/login", 
+  body("email").isEmail(),
+  Auth.logIn);
 
 router.post("/logout", Auth.logOut);
+
+router.post("/posts/all",
+  authMiddleware,
+  Public.getAllPosts);
 
 router.post("/posts/add", 
   authMiddleware,
   body("message").isLength({min: 4}),
-  body("email").notEmpty(),
+  body("author").notEmpty(),
   Public.addPost);
 
 export default router;

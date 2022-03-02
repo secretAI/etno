@@ -29,10 +29,12 @@ class TokenService {
     try {
       const result: any = await Token.findOne({where: {userid: userid}}); 
       if(result) {
-        await Token.update(
+        const updated = await Token.update(
           {reToken: reToken},
           {where: {userid: userid}}
         );
+
+        return updated;
       }
       const token = await Token.create({reToken: reToken, userid: userid});
 

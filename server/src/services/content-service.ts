@@ -3,13 +3,9 @@ import Post from "../models/Post";
 import User from "../models/User";
 
 class ConentService {
-  async addPost(email: string, msg: string, content?: string) {
+  async addPost(email: string, title: string, msg: string, content?: string) {
     try {
-      const user = await User.findOne({where: {email: email}});
-      if(!user) {
-        throw ApiError.requestError("* Such user doesn't exist *");
-      }
-      const post = await Post.create({author: email, message: msg, content: content});
+      const post = await Post.create({author: email, title: title, message: msg, content: content});
 
       return post;
     }
@@ -18,7 +14,12 @@ class ConentService {
     }
   }
 
+  async getAllPosts() {
+    const posts = await Post.findAll({limit: 10});
 
+    console.log(posts);
+    return posts;
+  }
 }
 
 export default new ConentService();

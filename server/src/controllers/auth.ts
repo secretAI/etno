@@ -25,9 +25,10 @@ class Auth {
 
   async logIn(req: any, res: any, next: any) {
     try {
+      const errors = validationResult(req);
+      if(!errors.isEmpty()) return next(ApiError.requestError("* Validation error during login *"));
       const {email, password} = req.body;
       const userData = await UserService.logIn(email, password);
-      if(userData.refresh === undefined) return next(ApiError.requestError("* Token was not found *"));
       res.cookie("reToken", userData.refresh, {
         maxAge: 2592000000, //30d
         httpOnly: true

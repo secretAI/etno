@@ -1,10 +1,10 @@
 <template lang="pug">
-button(type="submit" class="btn") Регистрация
+button(type="submit" class="btn") Опубликовать
 </template>
 
 <script>
 export default {
-  name: "sign-btn"
+  name: "post-btn"
 }
 </script>
 
@@ -15,17 +15,19 @@ export default {
   .btn {
     width: 160px;
     height: 45px;
-    border: 2px solid black;
+    border: 2px solid $blue;
     border-radius: 4px;
     cursor: pointer;
     font-size: 20px;
     font-family: 'Roboto Slab', serif;
-    background-color: black;
-    color: white;
+    background-color: white;
+    color: black;
     transition-duration: 120ms;
+    font-weight: 600;
     &:hover {
       background-color: $blue;
       border-color: $blue;
+      color: white;
     }
   }
 </style>

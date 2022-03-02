@@ -16,7 +16,7 @@ export default {
     width: 140px;
     height: 45px;
     border: 2px solid black;
-    border-radius: 16px;
+    border-radius: 4px;
     cursor: pointer;
     font-size: 20px;
     font-family: 'Roboto Slab', serif;

@@ -10,7 +10,7 @@ const Post = database.define("post", {
   },
   date: {
     type: Sequelize.DATE,
-    defaultValue: Date.now()
+    defaultValue: new Date()
   },
   author: {
     type: Sequelize.STRING,
@@ -19,6 +19,10 @@ const Post = database.define("post", {
       model: User,
       key: "email"
     }
+  },
+  title: {
+    type: Sequelize.STRING,
+    allowNull: false
   },
   message: {
     type: Sequelize.TEXT,

@@ -2,10 +2,11 @@
 div(class="wrapper")
   form(class="container" @submit.prevent="sendData")
     h1(class="title") Регистрация
-    glo-input(placeholder="Email")
-    glo-input(placeholder="Пароль" type="password")
-    glo-input(placeholder="Повторите пароль" type="password")
+    glo-input(placeholder="Email" v-bind:value="email" @input="email = $event.target.value")
+    glo-input(placeholder="Пароль" type="password" v-bind:value="password" @input="password = $event.target.value")
+    glo-input(placeholder="Повторите пароль" type="password" v-bind:value="repassword" @input="repassword = $event.target.value")
     sign-btn 
+    router-link(to="/login" class="link") Авторизация
 </template>
 
 <script>
@@ -20,18 +21,17 @@ export default {
   },
   methods: {
     async sendData() {
-      if(this.password !== this.repassword) throw new SyntaxError("Пароли не совпадают");
       const response = await axios.post("http://127.0.0.1:3030/api/signup", {
         email: this.email,
         password: this.password
       });
-      console.log(response);
+      if(response.status === 200) this.$router.push({path: "/login"});
     }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @mixin centerify {
     position: absolute;
     top: 0;
@@ -39,8 +39,6 @@ export default {
     left: 0;
     right: 0;
   }
-  
-  $gray: rgb(224, 224, 224);;
 
   .wrapper {
     @include centerify();
@@ -50,7 +48,6 @@ export default {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-color: $gray;
     .container {
       width: 440px;
       height: 380px;
@@ -59,7 +56,6 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background-color: $gray;
       font-family: 'Roboto Slab', serif;
       * {
         margin: 8px;
@@ -69,6 +65,17 @@ export default {
         font-size: 72px;
         font-weight: 700;  
         color: rgb(32, 32, 32);
+      }
+      .link {
+        margin-top: -5px;
+        color: black;
+        transition-duration: 200ms;
+        &:visited {
+          color: black;
+        }
+        &:hover {
+          color: rgb(73, 73, 73);
+        }        
       }
     }
   }

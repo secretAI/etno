@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApiError } from "../exceptions/api-error";
 import TokenService from "../services/token-service";
 
