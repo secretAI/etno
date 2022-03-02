@@ -1,10 +1,16 @@
 import { Router } from "express";
 import { body } from "express-validator";
+import cors from "cors";
 import Auth from "../controllers/auth";
 import Public from "../controllers/public";
 import { authMiddleware } from "../middlewares/auth-middleware";
 
 const router = Router();
+
+router.use(cors({
+  origin: "*",
+  optionsSuccessStatus: 200
+}));
 
 router.get("/", (req, res) => {
   res.json({
