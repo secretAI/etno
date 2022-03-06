@@ -21,8 +21,6 @@ div(class="wrapper")
 
 <script>
 import axios from "axios";
-const data = JSON.parse(localStorage.getItem("token"));
-const config = {headers: {authorization: `Bearer ${data.access}`}};
 
 export default {
   data() {
@@ -50,12 +48,19 @@ export default {
   },
   methods: {
     async getPosts() {
+      const data = JSON.parse(localStorage.getItem("token"));
+      if(!data) this.$router.push({path: "/login"});
+      const config = {headers: {authorization: `Bearer ${data.access}`}};
       const response = await axios.post("http://127.0.0.1:3030/api/posts/all", {}, config);
-      for(const post of response.data) this.posts.unshift(post)
+      for(const post of response.data) this.posts.push(post);
+      this.posts.reverse();
     },
     async addPost() {
+      const data = JSON.parse(localStorage.getItem("token"));
+      if(!data) this.$router.push({path: "/login"});
+      const config = {headers: {authorization: `Bearer ${data.access}`}};
       const body = {
-        author: `${data.user.email}`,
+        author: data.user.email,
         title: this.title,
         message: this.message,
       }

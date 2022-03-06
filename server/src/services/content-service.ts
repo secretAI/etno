@@ -1,6 +1,4 @@
-import { ApiError } from "../exceptions/api-error";
 import Post from "../models/Post";
-import User from "../models/User";
 
 class ConentService {
   async addPost(email: string, title: string, msg: string, content?: string) {

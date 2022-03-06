@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { ApiError } from "../exceptions/api-error";
 import UserService from "../services/user-service";
 
 class Auth {
-  async signUp(req: any, res: any, next: any) {
+  async signUp(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
       if(!errors.isEmpty()) return next(ApiError.requestError("* Validation error during signup *"));
@@ -23,7 +23,7 @@ class Auth {
     }
   }
 
-  async logIn(req: any, res: any, next: any) {
+  async logIn(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
       if(!errors.isEmpty()) return next(ApiError.requestError("* Validation error during login *"));
@@ -41,7 +41,7 @@ class Auth {
     }
   }
 
-  async logOut(req: any, res: any, next: any) {
+  async logOut(req: Request, res: Response, next: NextFunction) {
     try {
       const { reToken } = req.cookies;
       const token = await UserService.logOut(reToken);

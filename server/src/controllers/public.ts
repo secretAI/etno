@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { validationResult } from "express-validator";
 import { ApiError } from "../exceptions/api-error";
-
+import { Request, Response, NextFunction } from "express";
 import ContentService from "../services/content-service";
 
 class Public {
-  async addPost(req: any, res: any, next: any) {
+  async addPost(req: Request, res: Response, next: NextFunction)  {
     try {
       const errors = validationResult(req);
       if(!errors.isEmpty()) return next(ApiError.requestError("* Validation error during adding a post *"));
@@ -19,7 +18,7 @@ class Public {
     }
   }
 
-  async getAllPosts(req: any, res: any, next: any) {
+  async getAllPosts(req: Request, res: Response, next: NextFunction) {
     try {
       const posts = await ContentService.getAllPosts();
 
