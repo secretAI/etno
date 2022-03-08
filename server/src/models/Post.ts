@@ -31,6 +31,10 @@ const Post = database.define("post", {
   content: {
     type: Sequelize.STRING,
     defaultValue: null
+  },
+  deletedAt: {
+    type: Sequelize.STRING,
+    defaultValue: null
   }
 });
 

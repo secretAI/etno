@@ -1,5 +1,5 @@
 FROM node
-EXPOSE 6060
+EXPOSE 6565
 
 RUN mkdir -p ./app
 WORKDIR /app
@@ -9,4 +9,4 @@ COPY package-lock.json /app/
 RUN npm i
 COPY . .
 
-CMD ["npm", "run", "serve"]
+CMD ["npm", "run", "dev"]

@@ -40,4 +40,8 @@ router.post("/posts/add",
   body("author").notEmpty(),
   Public.addPost);
 
+router.post("/posts/remove",
+  authMiddleware,
+  Public.removePost);
+
 export default router;

@@ -28,6 +28,18 @@ class Public {
       next(err);
     }
   }
+
+  async removePost(req: Request, res: Response, next: NextFunction) {
+    try {
+      const {author, date} = req.body;
+      const removed = await ContentService.removePost(author, date);
+
+      res.status(200).json(removed);
+    }
+    catch(err) {
+      next(err);
+    }
+  }
 }
 
 export default new Public();

@@ -1,13 +1,9 @@
-import {Sequelize} from "sequelize";
+import { Sequelize } from "sequelize";
 import configs from "../config/postgres";
 
 const config = configs.development;
 
-export const database = new Sequelize(config.database, config.username, config.password, {
-  dialect: "postgres",
-  port: config.port,
-  logging: false
-});
+export const database = new Sequelize(config.uri, config);
 
 export async function connectToDB() {
   try {
