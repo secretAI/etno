@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../exceptions/api-error";
 import TokenService from "../services/token-service";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function authMiddleware(req: Request | any, res: Response, next: NextFunction) {
   try {
     const authHeader = req.headers.authorization;

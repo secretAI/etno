@@ -1,5 +1,7 @@
 import Sequelize from "sequelize";
 import { database } from "../database/main";
+import Post from "./Post";
+import Token from "./Token";
 
 const User = database.define("user", {
   id: {

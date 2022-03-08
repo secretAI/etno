@@ -16,7 +16,8 @@
       "ESNext.AsyncIterable",
       "ES2021",
       "DOM"
-    ]
+    ],
+    "typeRoots": ["src/tools/interfaces.d.ts"]
   },
-  "exclude": ["node_modules", "app.ts", "src/*.js"],
+  "exclude": ["node_modules", "server.ts", "src/*.js"],
 }
